@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>AeuxGlobal Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-bg: #0b1912;
+            --card-dark-1: #153826;
+            --card-dark-2: #0e2419;
+            --accent: #2fbf6d;
+            --accent-soft: #8fd6ab;
+            --main-bg: #f2f4f2;
+            --card-bg: #ffffff;
+            --border: #eaece9;
+            --text-dark: #101b14;
+            --text-gray: #8b968f;
+            --text-gray2: #a4ada6;
+            --red: #ef4b4b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            background: radial-gradient(ellipse at 25% 15%, #1d6b3a 0%, #0b3a1f 45%, #03140a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 34px;
+            min-height: 100vh;
+        }
+
+        .frame {
+            display: flex;
+            width: 100%;
+            max-width: 1300px;
+            min-height: 640px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .05);
+        }
+
+        /* ---------- SIDEBAR ---------- */
+        .sidebar {
+            width: 230px;
+            flex-shrink: 0;
+            background: var(--sidebar-bg);
+            color: #fff;
+            padding: 22px 16px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 2px 6px 22px;
+        }
+
+        .logo .mark {
+            width: 24px;
+            height: 24px;
+            border-radius: 7px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #06180d;
+            font-size: 12.5px;
+        }
+
+        .logo span {
+            font-weight: 700;
+            font-size: 14.5px;
+            letter-spacing: -.01em;
+        }
+
+        .ws-label {
+            font-size: 10px;
+            color: #6c8577;
+            padding: 0 4px;
+            margin-bottom: 7px;
+            font-weight: 500;
+        }
+
+        .ws-pill {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #122a1c;
+            border: 1px solid #1c3a28;
+            border-radius: 11px;
+            padding: 9px 11px;
+            margin-bottom: 14px;
+            font-size: 12.5px;
+            font-weight: 500;
+        }
+
+        .ws-pill .dot-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ws-pill .sq {
+            width: 15px;
+            height: 15px;
+            border-radius: 5px;
+            background: var(--accent);
+        }
+
+        .ws-pill svg {
+            opacity: .55;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #122a1c;
+            border: 1px solid #1c3a28;
+            border-radius: 11px;
+            padding: 9px 11px;
+            margin-bottom: 22px;
+            color: #6c8577;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .search-box svg {
+            opacity: .7;
+            flex-shrink: 0;
+        }
+
+        .search-box kbd {
+            margin-left: auto;
+            background: #0b1912;
+            border: 1px solid #23422e;
+            border-radius: 5px;
+            padding: 1.5px 6px;
+            font-size: 9.5px;
+            color: #7fa08c;
+            font-family: inherit;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            color: #4c6457;
+            letter-spacing: .05em;
+            padding: 0 6px;
+            margin-bottom: 9px;
+            font-weight: 600;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #8ea798;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background .15s;
+        }
+
+        .nav-item svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            opacity: .85;
+        }
+
+        .nav-item.active {
+            background: #eef2ee;
+            color: #101b14;
+            font-weight: 600;
+        }
+
+        .nav-item.active svg {
+            opacity: 1;
+            color: #101b14;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--accent);
+            color: #06180d;
+            font-size: 9.5px;
+            font-weight: 700;
+            border-radius: 9px;
+            padding: 1.5px 7px;
+        }
+
+        .nav-badge.new {
+            background: transparent;
+            border: 1px solid #23422e;
+            color: #7fa08c;
+            font-weight: 600;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #8ea798;
+            padding: 0 10px;
+            font-weight: 500;
+        }
+
+        .settings-row svg {
+            width: 15px;
+            height: 15px;
+            opacity: .85;
+        }
+
+        .divider {
+            height: 1px;
+            background: #182f21;
+            margin: 0;
+        }
+
+        .account-label {
+            font-size: 9.5px;
+            color: #4c6457;
+            letter-spacing: .05em;
+            padding: 0 10px;
+            font-weight: 600;
+        }
+
+        .user-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 2px 8px;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            background: radial-gradient(circle at 35% 30%, #e8dcc8, #b8a888 70%, #9c8a68);
+        }
+
+        .user-meta {
+            line-height: 1.25;
+        }
+
+        .user-meta .name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .user-meta .handle {
+            font-size: 10.5px;
+            color: #5e7869;
+            font-weight: 500;
+        }
+
+        .user-row .dots {
+            margin-left: auto;
+            color: #5e7869;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        /* ---------- MAIN ---------- */
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 24px 28px;
+            overflow: hidden;
+        }
+
+        .top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .top-row h1 {
+            font-size: 21px;
+            color: var(--text-dark);
+            font-weight: 700;
+            letter-spacing: -.02em;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #12261a;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .add-widget {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #12261a;
+            color: #fff;
+            font-size: 12.5px;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 22px;
+            box-shadow: 0 4px 14px rgba(16, 27, 20, .25);
+        }
+
+        .add-widget svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .stat-card {
+            border-radius: 18px;
+            padding: 17px 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card.dark {
+            background: linear-gradient(155deg, var(--card-dark-1), var(--card-dark-2));
+            color: #fff;
+            box-shadow: 0 10px 30px -8px rgba(10, 40, 22, .5);
+        }
+
+        .stat-card.light {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-dark);
+            box-shadow: 0 2px 10px rgba(20, 30, 24, .03);
+        }
+
+        .stat-label {
+            font-size: 11.5px;
+            color: #a9c9b6;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .stat-card.light .stat-label {
+            color: var(--text-gray);
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 11px;
+            letter-spacing: -.01em;
+        }
+
+        .stat-delta {
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+        }
+
+        .stat-delta.down {
+            color: #f2a3a3;
+        }
+
+        .stat-card.light .stat-delta.down {
+            color: var(--red);
+        }
+
+        .stat-delta.up {
+            color: var(--accent-soft);
+        }
+
+        .mini-chart {
+            position: absolute;
+            right: 16px;
+            top: 17px;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 32px;
+        }
+
+        .mini-chart i {
+            width: 5px;
+            border-radius: 2px 2px 0 0;
+            display: block;
+            background: #dde3de;
+        }
+
+        .mini-chart.red i.hi {
+            background: var(--red);
+        }
+
+        .mini-chart.green i.hi {
+            background: var(--accent);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.9fr 1.05fr;
+            gap: 14px;
+        }
+
+        .col-left,
+        .col-right {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px 20px;
+            box-shadow: 0 2px 10px rgba(20, 30, 24, .03);
+        }
+
+        .panel-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .panel-head h3 {
+            font-size: 14px;
+            color: var(--text-dark);
+            font-weight: 600;
+            letter-spacing: -.01em;
+        }
+
+        .dropdown {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            color: #5c6a61;
+            font-weight: 500;
+            background: #f6f7f6;
+            border: 1px solid var(--border);
+            padding: 6px 11px;
+            border-radius: 16px;
+        }
+
+        .dropdown svg {
+            width: 9px;
+            height: 9px;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            height: 148px;
+            position: relative;
+            padding-top: 12px;
+        }
+
+        .bar-chart::before {
+            content: "100";
+            position: absolute;
+            top: -2px;
+            left: 0;
+            font-size: 9px;
+            color: #c3c9c5;
+        }
+
+        .bar-chart::after {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            border-top: 1px dashed #dde1dd;
+        }
+
+        .bar-chart .bar {
+            flex: 1;
+            background: #e3e7e3;
+            border-radius: 3px 3px 0 0;
+            position: relative;
+        }
+
+        .bar-chart .bar.active {
+            background: var(--accent);
+        }
+
+        .bar-chart .bar.active .tooltip {
+            position: absolute;
+            top: -27px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #101b14;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 4px 9px;
+            border-radius: 7px;
+            white-space: nowrap;
+        }
+
+        .bar-chart .bar.active .tooltip::after {
+            content: "";
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 6px;
+            height: 6px;
+            background: #101b14;
+        }
+
+        .x-axis {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 9px;
+            font-size: 9.5px;
+            color: var(--text-gray2);
+            font-weight: 500;
+        }
+
+        .recycling-card {
+            background: linear-gradient(155deg, var(--card-dark-1), var(--card-dark-2));
+            color: #fff;
+            border-radius: 18px;
+            padding: 19px 20px;
+            box-shadow: 0 10px 30px -8px rgba(10, 40, 22, .5);
+        }
+
+        .recycling-card .headline {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -.02em;
+        }
+
+        .recycling-card .headline small {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #a9c9b6;
+            margin-left: 5px;
+            letter-spacing: .03em;
+        }
+
+        .recycling-card .sub {
+            font-size: 11px;
+            color: #8fd6ab;
+            margin: 6px 0 18px;
+            font-weight: 500;
+        }
+
+        .recycle-row {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin-bottom: 13px;
+        }
+
+        .recycle-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .recycle-row .dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #8fd6ab;
+        }
+
+        .recycle-row .label {
+            font-size: 11.5px;
+            color: #a9c2b3;
+            font-weight: 500;
+        }
+
+        .recycle-row .value {
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 1px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-gray);
+            font-weight: 500;
+            font-size: 10.5px;
+            padding: 0 8px 10px;
+        }
+
+        td {
+            padding: 11px 8px;
+            border-top: 1px solid #f2f3f2;
+            color: var(--text-dark);
+            vertical-align: middle;
+            font-weight: 500;
+        }
+
+        tr:first-child td {
+            border-top: 1px solid var(--border);
+        }
+
+        .region-cell {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .flag {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, .05);
+        }
+
+        .flag svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .region-cell .rname {
+            font-weight: 600;
+            line-height: 1.25;
+            font-size: 12px;
+        }
+
+        .region-cell .rsub {
+            font-size: 10px;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .tag {
+            background: #eef3ee;
+            color: #2b6b45;
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 11px;
+            white-space: nowrap;
+        }
+
+        .map-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .map-wrap {
+            position: relative;
+            flex: 1;
+            border-radius: 13px;
+            overflow: hidden;
+            background: #0e2417;
+            margin-top: 2px;
+            min-height: 200px;
+        }
+
+        .europe-label {
+            position: absolute;
+            left: 14px;
+            top: 16px;
+            color: #fff;
+            font-size: 11.5px;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .europe-label .pct {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .europe-label .lvl {
+            color: #9db8a8;
+            font-weight: 500;
+            font-size: 10px;
+        }
+
+        .qmark {
+            position: absolute;
+            left: 14px;
+            bottom: 14px;
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .12);
+            color: #fff;
+            font-size: 10.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="frame">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="mark">A</div><span>AeuxGlobal</span>
+            </div>
+
+            <div class="ws-label">Team Workspace</div>
+            <div class="ws-pill">
+                <div class="dot-name">
+                    <div class="sq"></div>EcoPlastic
+                </div>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6" />
+                </svg>
+            </div>
+
+            <div class="search-box">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="M21 21l-4.3-4.3" />
+                </svg>
+                Search for... <kbd>⌘F</kbd>
+            </div>
+
+            <div class="nav-label">NAVIGATION</div>
+            <div class="nav">
+                <div class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="10" rx="1.5" />
+                        <rect x="14" y="3" width="7" height="6" rx="1.5" />
+                        <rect x="14" y="13" width="7" height="8" rx="1.5" />
+                        <rect x="3" y="17" width="7" height="4" rx="1.5" />
+                    </svg>
+                    Dashboard
+                </div>
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M4 19V6M10 19V10M16 19V4M22 19v-7" />
+                    </svg>
+                    Analytics
+                </div>
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="6" r="2.6" />
+                        <circle cx="5" cy="18" r="2.6" />
+                        <circle cx="19" cy="18" r="2.6" />
+                        <path d="M12 8.6V13M12 13L6.6 16M12 13l5.4 3" />
+                    </svg>
+                    Team Structure
+                </div>
+                <div class="nav-item">
+                    Reports<span class="nav-badge" style="margin-left:auto"></span>
+                </div>
+                <div class="nav-item">
+                    Support<span class="nav-badge new"></span>
+                </div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="settings-row">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a1.9 1.9 0 11-2.7 2.7l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a1.9 1.9 0 11-3.8 0v-.1a1.6 1.6 0 00-1-1.5 1.6 1.6 0 00-1.8.3l-.1.1a1.9 1.9 0 11-2.7-2.7l.1-.1a1.6 1.6 0 00.3-1.8 1.6 1.6 0 00-1.5-1H3a1.9 1.9 0 110-3.8h.1a1.6 1.6 0 001.5-1 1.6 1.6 0 00-.3-1.8l-.1-.1A1.9 1.9 0 116.9 4.9l.1.1a1.6 1.6 0 001.8.3h0a1.6 1.6 0 001-1.5V3a1.9 1.9 0 113.8 0v.1a1.6 1.6 0 001 1.5 1.6 1.6 0 001.8-.3l.1-.1a1.9 1.9 0 112.7 2.7l-.1.1a1.6 1.6 0 00-.3 1.8v0a1.6 1.6 0 001.5 1H21a1.9 1.9 0 110 3.8h-.1a1.6 1.6 0 00-1.5 1z" />
+                    </svg>
+                    Settings
+                </div>
+                <div class="divider"></div>
+                <div class="account-label">USER ACCOUNT</div>
+                <div class="user-row">
+                    <div class="avatar"></div>
+                    <div class="user-meta">
+                        <div class="name">Alex Williamson</div>
+                        <div class="handle">@alex-1974</div>
+                    </div>
+                    <div class="dots">⋮</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN -->
+        <div class="main">
+            <div class="top-row">
+                <h1>Dashboard</h1>
+                <div class="top-actions">
+                    <div class="icon-circle">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+                        </svg>
+                    </div>
+                    <div class="add-widget">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                            stroke-linecap="round">
+                            <path d="M12 5v14M5 12h14" />
+                        </svg>
+                        Add Custom Widget
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card dark">
+                    <div class="stat-label">Air Pollution Level</div>
+                    <div class="stat-value">35.05 µg/m³</div>
+                    <div class="stat-delta down">↓ 2.3% than last month</div>
+                    <div class="mini-chart green">
+                        <i style="height:9px"></i><i style="height:15px"></i><i class="hi" style="height:27px"></i><i
+                            style="height:13px"></i><i style="height:19px"></i>
+                    </div>
+                </div>
+                <div class="stat-card light">
+                    <div class="stat-label">Environmental Quality Index</div>
+                    <div class="stat-value">75.50/100%</div>
+                    <div class="stat-delta down">↓ 1.8% than last month</div>
+                    <div class="mini-chart red">
+                        <i style="height:9px"></i><i class="hi" style="height:27px"></i><i style="height:13px"></i><i
+                            style="height:19px"></i><i style="height:11px"></i>
+                    </div>
+                </div>
+                <div class="stat-card light">
+                    <div class="stat-label">Investments in Clean Technologies</div>
+                    <div class="stat-value">$967,570</div>
+                    <div class="stat-delta up">↑ 5.1 than last month</div>
+                    <div class="mini-chart green">
+                        <i style="height:11px"></i><i style="height:17px"></i><i class="hi" style="height:27px"></i><i
+                            style="height:15px"></i><i style="height:21px"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="col-left">
+                    <div class="panel">
+                        <div class="panel-head">
+                            <h3>Climate Change Index</h3>
+                            <div class="dropdown">2 month <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.4" stroke-linecap="round">
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg></div>
+                        </div>
+                        <div class="bar-chart" id="bars"></div>
+                        <div class="x-axis" id="xaxis"></div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-head">
+                            <h3>Plastic Recycling by Region</h3>
+                            <div class="dropdown">All region <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.4" stroke-linecap="round">
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg></div>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Region</th>
+                                <th>Factory</th>
+                                <th>Recycled</th>
+                                <th>Dynamic</th>
+                                <th>Main Technologies</th>
+                                <th>Total Volume</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="region-cell">
+                                        <div class="flag"><svg viewBox="0 0 60 40">
+                                                <rect width="60" height="40" fill="#b22234" />
+                                                <g fill="#fff">
+                                                    <rect y="3" width="60" height="3" />
+                                                    <rect y="9" width="60" height="3" />
+                                                    <rect y="15" width="60" height="3" />
+                                                    <rect y="21" width="60" height="3" />
+                                                    <rect y="27" width="60" height="3" />
+                                                    <rect y="33" width="60" height="3" />
+                                                </g>
+                                                <rect width="26" height="21" fill="#3c3b6e" />
+                                            </svg></div>
+                                        <div>
+                                            <div class="rname">USA</div>
+                                            <div class="rsub">America</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>253+</td>
+                                <td>35%</td>
+                                <td><svg width="46" height="18">
+                                        <polyline points="0,14 8,10 16,12 24,4 32,8 40,2" fill="none" stroke="#ef4b4b"
+                                            stroke-width="1.6" stroke-linecap="round" />
+                                    </svg></td>
+                                <td><span class="tag">Mechanical</span></td>
+                                <td>4,167,987 tons</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="region-cell">
+                                        <div class="flag"><svg viewBox="0 0 60 40">
+                                                <rect width="60" height="13.3" fill="#000" />
+                                                <rect y="13.3" width="60" height="13.3" fill="#d00" />
+                                                <rect y="26.6" width="60" height="13.4" fill="#ffce00" />
+                                            </svg></div>
+                                        <div>
+                                            <div class="rname">German</div>
+                                            <div class="rsub">Europe</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>211+</td>
+                                <td>60%</td>
+                                <td><svg width="46" height="18">
+                                        <polyline points="0,10 8,14 16,6 24,10 32,4 40,6" fill="none" stroke="#2fbf6d"
+                                            stroke-width="1.6" stroke-linecap="round" />
+                                    </svg></td>
+                                <td><span class="tag">Mechanical</span></td>
+                                <td>2,571,193 tons</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="region-cell">
+                                        <div class="flag"><svg viewBox="0 0 60 40">
+                                                <rect width="60" height="40" fill="#fff" />
+                                                <circle cx="30" cy="20" r="11" fill="#bc002d" />
+                                            </svg></div>
+                                        <div>
+                                            <div class="rname">Japan</div>
+                                            <div class="rsub">Asia</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>364+</td>
+                                <td>85%</td>
+                                <td><svg width="46" height="18">
+                                        <polyline points="0,6 8,10 16,4 24,8 32,12 40,8" fill="none" stroke="#2fbf6d"
+                                            stroke-width="1.6" stroke-linecap="round" />
+                                    </svg></td>
+                                <td><span class="tag">Energy recovery</span></td>
+                                <td>1,864,275 tons</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="region-cell">
+                                        <div class="flag"><svg viewBox="0 0 60 40">
+                                                <rect width="60" height="40" fill="#de2910" />
+                                                <circle cx="12" cy="10" r="4.5" fill="#ffde00" />
+                                            </svg></div>
+                                        <div>
+                                            <div class="rname">China</div>
+                                            <div class="rsub">Asia</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>855+</td>
+                                <td>25%</td>
+                                <td><svg width="46" height="18">
+                                        <polyline points="0,4 8,8 16,12 24,10 32,16 40,14" fill="none" stroke="#ef4b4b"
+                                            stroke-width="1.6" stroke-linecap="round" />
+                                    </svg></td>
+                                <td><span class="tag">Chemical</span></td>
+                                <td>8,643,742 tons</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-right">
+                    <div class="recycling-card">
+                        <div class="headline">99,681m <small>TONS</small></div>
+                        <div class="sub">↑ 20% reduced CO2</div>
+                        <div class="recycle-row">
+                            <div class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M12 2v6M7.5 6l3 5M16.5 6l-3 5M4 16l5-3M4 16l3 5M20 16l-5-3M20 16l-3 5M9 21h6" />
+                                </svg></div>
+                            <div>
+                                <div class="label">Mechanical recycling</div>
+                                <div class="value">1,697 tons</div>
+                            </div>
+                        </div>
+                        <div class="recycle-row">
+                            <div class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M9 2v5.5L4 16a3 3 0 002.6 4.5h10.8A3 3 0 0020 16l-5-8.5V2M9 2h6" />
+                                </svg></div>
+                            <div>
+                                <div class="label">Chemical recycling</div>
+                                <div class="value">913 tons</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel map-card">
+                        <div class="panel-head">
+                            <h3>Global pollution</h3>
+                            <div class="dropdown">Europe <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.4" stroke-linecap="round">
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg></div>
+                        </div>
+                        <div class="map-wrap">
+                            <div class="europe-label">Ukraine<br><span class="pct">89%</span> <span class="lvl">High
+                                    Level</span></div>
+                            <div class="qmark">?</div>
+                            <svg width="100%" height="100%" viewBox="0 0 260 210" preserveAspectRatio="xMidYMid slice">
+                                <rect width="260" height="210" fill="#0e2417" />
+                                <path d="M55 35 L100 24 L128 40 L118 60 L85 66 L60 55 Z" fill="#1a4a2c" />
+                                <path d="M100 24 L150 20 L168 45 L150 65 L128 40 Z" fill="#235a34" />
+                                <path d="M150 20 L195 30 L205 55 L185 70 L168 45 Z" fill="#2c6a3c" />
+                                <path d="M128 40 L168 45 L185 70 L165 95 L142 90 L118 60 Z" fill="#2fbf6d" />
+                                <path d="M60 55 L85 66 L118 60 L142 90 L120 115 L80 100 L58 80 Z" fill="#173e26" />
+                                <path d="M142 90 L165 95 L178 120 L155 140 L130 125 L120 115 Z" fill="#1e5230" />
+                                <path d="M185 70 L205 55 L222 78 L212 100 L192 100 L165 95 Z" fill="#173e26" />
+                                <path d="M80 100 L120 115 L130 125 L110 150 L75 140 L60 118 Z" fill="#0e2417"
+                                    stroke="#173e26" stroke-width="1" />
+                                <path d="M130 125 L155 140 L145 165 L118 160 L110 150 Z" fill="#143220" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const vals = [34, 42, 30, 55, 45, 38, 60, 50, 42, 58, 48, 70, 52, 44, 66, 50, 38, 60];
+        const activeIdx = 11;
+        const bars = document.getElementById('bars');
+        const xaxis = document.getElementById('xaxis');
+        vals.forEach((v, i) => {
+            const bar = document.createElement('div');
+            bar.className = 'bar' + (i === activeIdx ? ' active' : '');
+            bar.style.height = v + '%';
+            if (i === activeIdx) {
+                const tip = document.createElement('div');
+                tip.className = 'tooltip'; tip.textContent = '82.6 CCI';
+                bar.appendChild(tip);
+            }
+            bars.appendChild(bar);
+        });
+        ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10'].forEach(w => {
+            const s = document.createElement('span'); s.textContent = w; xaxis.appendChild(s);
+        });
+        // Reports / Support nav badges (added via JS to keep markup light)
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems[3].innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg>Reports<span class="nav-badge">1</span>';
+        navItems[4].innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M5 5l4 4M19 5l-4 4M5 19l4-4M19 19l-4-4"/></svg>Support<span class="nav-badge new">New</span>';
+    </script>
+</body>
+
+</html>
